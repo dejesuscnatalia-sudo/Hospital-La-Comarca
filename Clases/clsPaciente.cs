@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.InteropServices.JavaScript;
+
 namespace Hospital_La_Comarca.Clases;
 
 public class clsPaciente
@@ -6,4 +9,5 @@ public class clsPaciente
     private string _nombre;
     private string _apellidoPaterno;
     private string _apellidoMaterno;
+    private DateTime _fechaNacimiento;
 }
