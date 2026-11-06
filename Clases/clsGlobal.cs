@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+
+namespace Hospital_La_Comarca.Clases{
+    internal class clsGlobal
+    {
+        static public string _dbn = "dbEscolar";
+        
+        //static public string _server = @"void\sqlserver2025";   // original (Windows)
+        // En Windows (Podman) y en Linux (Fedora/Debian) el servidor puede ser distinto
+        static public string _server = OperatingSystem.IsWindows() ? "127.0.0.1,1433" : "localhost,1433";
+        static public string _psswd = "Liz.142857"; //Esto se tiene q ajustar para q funcione en el entorno de las 2 
+        
+        //static public string _sec = "Integrated Security=True";   // original: autenticacion de Windows, no existe en Linux. Hay q ver si te jala el q yo tengo
+        static public string _sec = "TrustServerCertificate=True";   // el contenedor usa un certificado propio
+        static public string _UserID = "sa";
+        static public string conexion = $"Data Source={_server}; Initial Catalog={_dbn};User ID={_UserID};Password={_psswd};{_sec}";
+        //$"Data Source={_server};Initial Catalog={_dbn};Persist Security Info=True;User ID={_UserID};Password={_psswd};Encrypt=False;Trusted_Connection=True;"; 
+        
+        /*
+        // Esto puede morir, despues vemos si se implementa algo parecido
+        static public int _idUsuario;
+        static public string _usuario;
+        static public byte _rol;          // 1 = usuario, 2 = admin
+        static public bool EsAdmin
+        {
+            get { return _rol == 2; }
+        }
+        */
+        
+        // Reemplazo de Application.Exit() de WinForms: cierra todo el programa
+        static public void Salir()
+        {
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                desktop.Shutdown();
+        }
+    }
+}
